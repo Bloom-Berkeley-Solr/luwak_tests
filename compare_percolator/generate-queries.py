@@ -87,9 +87,9 @@ if __name__ == '__main__':
         for i in xrange(args.count):
             if i and i % 1000 == 0: print i
             if args.within:
-                writer.writerow([makeWithinQuery(docs)])
+                writer.writerow(["query" + str(i), makeWithinQuery(docs)])
             else:
-                writer.writerow([makeBoolQuery(docs)])
+                writer.writerow(["query" + str(i), makeBoolQuery(docs)])
 
 
 

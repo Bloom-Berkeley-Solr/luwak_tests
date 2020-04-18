@@ -13,12 +13,14 @@ if __name__ == '__main__':
     #t0 = time.time()
     with open(sys.argv[2], mode='w') as dest_file:
         writer = csv.writer(dest_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        for fname in os.listdir(sys.argv[1]):
+        for i, fname in enumerate(os.listdir(sys.argv[1])):
             if fname.endswith('.gz'):
                 with gzip.open(os.path.join(sys.argv[1], fname)) as f:
                     # response = requests.post(conf.ES_URL + '%s/doc/_percolate' % conf.ES_DB,
-                    data=json.dumps({'doc': {'text': f.read()}})
-                    writer.writerow([data])
+                    text = f.read()
+                    solr_doc = json.dumps({'id': "doc" + str(i), 'text': text})
+                    elastic_doc = json.dumps({'text': text})
+                    writer.writerow([solr_doc, elastic_doc])
 
                     # assert response.status_code == 200
                     # total += response.json()['total']
