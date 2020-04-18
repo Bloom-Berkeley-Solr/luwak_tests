@@ -89,7 +89,6 @@ if __name__ == '__main__':
             if args.within:
                 writer.writerow([makeWithinQuery(docs)])
             else:
-                #print(makeBoolQuery(docs))
                 writer.writerow([makeBoolQuery(docs)])
 
 
