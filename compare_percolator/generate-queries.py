@@ -1,11 +1,9 @@
-import sys
 import argparse
 import os
-import requests
 import gzip
-import re
 import random
 import conf
+import csv
 
 
 def readDocs(docdir):
@@ -70,7 +68,7 @@ if __name__ == '__main__':
         help='number of queries to generate')
     parser.add_argument('--docdir', type=str, required=True,
         help='document directory')
-    parser.add_argument('--querydir', type=str, required=True,
+    parser.add_argument('--queryfile', type=str, required=True,
         help='generated query directory')
     parser.add_argument('--MUST', type=int, default=1, 
         help='number of MUST terms to include in queries')
@@ -83,11 +81,23 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
     docs = readDocs(args.docdir)
-    for i in xrange(args.count):
-        if i and i % 1000 == 0: print i
-        with open(os.path.join(args.querydir, '{0:06d}.txt'.format(i)), 'w') as f:
+
+    with open(args.queryfile, mode='w') as dest_file:
+        writer = csv.writer(dest_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        for i in xrange(args.count):
+            if i and i % 1000 == 0: print i
             if args.within:
-                f.write(makeWithinQuery(docs))
+                writer.writerow([makeWithinQuery(docs)])
             else:
-                f.write(makeBoolQuery(docs))
+                #print(makeBoolQuery(docs))
+                writer.writerow([makeBoolQuery(docs)])
+
+
+
+
+
+
+
+
+
 
