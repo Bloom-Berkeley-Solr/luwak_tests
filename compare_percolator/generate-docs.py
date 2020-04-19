@@ -17,10 +17,9 @@ if __name__ == '__main__':
             if fname.endswith('.gz'):
                 with gzip.open(os.path.join(sys.argv[1], fname)) as f:
                     # response = requests.post(conf.ES_URL + '%s/doc/_percolate' % conf.ES_DB,
-                    text = f.read()
-                    solr_doc = json.dumps({'id': "doc" + str(i), 'text': text})
-                    elastic_doc = json.dumps({'text': text})
-                    writer.writerow([solr_doc, elastic_doc])
+                    #solr_doc = json.dumps({'id': "doc" + str(i), 'text': text})
+                    doc = json.dumps({'text': f.read()})
+                    writer.writerow([doc])
 
                     # assert response.status_code == 200
                     # total += response.json()['total']
