@@ -90,13 +90,3 @@ if __name__ == '__main__':
                 writer.writerow(["query" + str(i), makeWithinQuery(docs)])
             else:
                 writer.writerow(["query" + str(i), makeBoolQuery(docs)])
-
-
-
-
-
-
-
-
-
-
