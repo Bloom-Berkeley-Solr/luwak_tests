@@ -60,3 +60,4 @@ docs/
 .idea
 .DS_Store
 *.csv
+*.gz
