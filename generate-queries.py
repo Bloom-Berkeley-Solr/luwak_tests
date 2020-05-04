@@ -1,3 +1,5 @@
+# Usage
+# 
 import argparse
 import os
 import gzip
@@ -13,7 +15,7 @@ def readDocs(docdir):
     for fname in os.listdir(docdir):
         if fname.endswith('.gz'):
             with gzip.open(os.path.join(docdir, fname)) as f:
-                docs.append([x.lower() for x in conf.WORD_RE.findall(f.read())])
+                docs.append([x.lower() for x in conf.WORD_RE.findall(f.read().decode())])
     return docs
 
 def makeBoolQuery(docs):
@@ -59,7 +61,7 @@ def printMostCommonWords(docs):
     counts = counts.items();
     counts.sort(cmp=lambda a, b: -1 if a[1] > b[1] else +1 if a[1] < b[1] else 0)
     for c in counts[:200]:
-        print c
+        print(c)
 
 
 if __name__ == '__main__':
@@ -69,7 +71,7 @@ if __name__ == '__main__':
     parser.add_argument('--docdir', type=str, required=True,
         help='document directory')
     parser.add_argument('--queryfile', type=str, required=True,
-        help='generated query directory')
+        help='generated query file')
     parser.add_argument('--MUST', type=int, default=1, 
         help='number of MUST terms to include in queries')
     parser.add_argument('--NOT', type=int, default=0,
@@ -84,8 +86,8 @@ if __name__ == '__main__':
 
     with open(args.queryfile, mode='w') as dest_file:
         writer = csv.writer(dest_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        for i in xrange(args.count):
-            if i and i % 1000 == 0: print i
+        for i in range(args.count):
+            if i and i % 1000 == 0: print(i)
             if args.within:
                 writer.writerow(["query" + str(i), makeWithinQuery(docs)])
             else:

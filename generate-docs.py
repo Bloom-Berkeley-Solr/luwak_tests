@@ -1,3 +1,5 @@
+# Usage
+# python3 generate-docs.py doc_folder dest_file
 import sys
 import os
 import gzip
@@ -12,7 +14,7 @@ if __name__ == '__main__':
         for i, fname in enumerate(os.listdir(sys.argv[1])):
             if fname.endswith('.gz'):
                 with gzip.open(os.path.join(sys.argv[1], fname)) as f:
-                    doc = json.dumps({'text': f.read()})
+                    doc = json.dumps({'text': f.read().decode()})
                     writer.writerow([doc])
 
 

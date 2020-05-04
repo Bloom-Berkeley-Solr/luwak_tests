@@ -1,3 +1,5 @@
+# Usage
+# python3 download-random-wp-text.py num_docs dest_folder
 import sys
 import os.path
 import requests
@@ -7,7 +9,7 @@ import conf
 
 
 if __name__ == '__main__':
-    for i in xrange(int(sys.argv[1])):
+    for i in range(int(sys.argv[1])):
         text = ''
         while len(text) < conf.MIN_TEXT_LEN:
             response = requests.get(conf.RANDOM_URL)
@@ -19,4 +21,4 @@ if __name__ == '__main__':
         with gzip.open(os.path.join(sys.argv[2], name + '.gz'), 'w') as f:
             f.write(text.encode('utf8'))
 
-        print i, name
+        print(i, name)
